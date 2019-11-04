@@ -10,11 +10,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_moons
 import neural_network as nn
+import random
 
 
 #This is the dataset used to test our network
 np.random.seed(0)
 X, y = make_moons(200, noise=0.20)
+
+nn.build_model(X, y, 1)
+nn.build_model(X, y, 2)
+nn.build_model(X, y, 3)
+
 plt.scatter(X[:,0], X[:,1], s=40, c=y, cmap=plt.cm.Spectral)
 
 # # Generate outputs, Use this code
