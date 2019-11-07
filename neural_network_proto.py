@@ -33,6 +33,9 @@ def calculate_loss(model, X, y):
     #print("z = ",z)
     #print ("yh = ",yh)
 
+    # Since her y values are not of the form [[0,1],[1,0]] adapt her 1D
+    # y to 2D where first dimension is sample and second is class
+    # Then calculate the loss using catagorical cross entropy loss
     for n in range(N):
         for i in range(C):
             if y[n] == 0 and i == 0:
@@ -95,7 +98,7 @@ def calculate_z(model,x):
 
 
 def softmax(z):
-    # Compute softmax values for each sets of scores in x.
+    # Compute softmax values for each sets of scores in z.
     ex = np.exp(z - np.max(z))
     return ex / ex.sum(axis=0)
 
