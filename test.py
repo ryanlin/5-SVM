@@ -24,11 +24,11 @@ nn.build_model(X, y, 3)
 plt.scatter(X[:,0], X[:,1], s=40, c=y, cmap=plt.cm.Spectral)
 
 # # Generate outputs, Use this code
-# plt.figure(figsize=(16, 32))
-# hidden_layer_dimensions = [1, 2, 3, 4]
-# for i, nn_hdim in enumerate(hidden_layer_dimensions):
-#   plt.subplot(5, 2, i+1)
-#   plt.title('HiddenLayerSize%d' %nn_hdim)
-#   model = nn.build_model(X, y, nn_hdim)
-#   nn.plot_decision_boundary(lambda x: nn.predict(model, x), X, y)
-# plt.show()
+plt.figure(figsize=(16, 32))
+hidden_layer_dimensions = [1, 2, 3, 4]
+for i, nn_hdim in enumerate(hidden_layer_dimensions):
+  plt.subplot(5, 2, i+1)
+  plt.title('HiddenLayerSize%d' %nn_hdim)
+  model = nn.build_model(X, y, nn_hdim)
+  nn.plot_decision_boundary(lambda P: np.array([nn.predict(model, x) for x in X]), X, y)
+plt.show()

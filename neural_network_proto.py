@@ -60,7 +60,7 @@ def calculate_cross_entropy(y,yh):
 # It's a dictionary.
 # x is one sampe (without the label)
 def predict(model, x):
-    return 0
+    return [0,1]
 
 # This function learns parameters for the neural network and returns the model.
 # - X is the training data
