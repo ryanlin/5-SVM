@@ -9,8 +9,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import random
-import math
 
 ## Comments are from the Project 3 assignment sheet. Delete as you like ##
 
@@ -53,14 +51,21 @@ def calculate_loss(model, X, y):
     return 0
 
 def calculate_cross_entropy(y,yh):
-    return y * math.log(yh)
+    return y * np.log(yh)
 
 # Helper function to predict an output (0 or 1)
 # model is the current version of the model { ’W1 ’W1, ’b1 ’:b1 , ’W2 ’:W2, ’b2 ’:b2 ’}
 # It's a dictionary.
 # x is one sampe (without the label)
 def predict(model, x):
-    return [0,1]
+      # Calculate outputs and prediction
+  x = np.reshape( x, (1, len(x)) )          # reshape input
+  a = np.dot(x, model['W1']) + model['b1']  # compute a ( a = x y + b)
+  h = np.tanh(a)                            # activation funtion h ( h = tanh(a))
+  z = np.dot(h, model['W2']) + model['b2']  # compute z (z = h w + b)
+  yh = softmax(z)                           # prediction yh (softmax(z))
+
+  return yh
 
 # This function learns parameters for the neural network and returns the model.
 # - X is the training data
@@ -72,19 +77,13 @@ def build_model(X, y, nn_hdim, num_passes=20000, print_loss=False):
 
     print("--NUM H_DIMENSIONS: {0}--".format((nn_hdim)))
 
-    W1 = np.zeros((len(X[0]), nn_hdim))
-    W2 = np.zeros((nn_hdim, len(X[0])))
-    b1 = np.zeros((nn_hdim))
-    b2 = np.zeros((len(X[0])))
+    W1 = np.random.rand(len(X[0]), nn_hdim)
+    W2 = np.random.rand(nn_hdim, len(X[0]))
+    b1 = np.random.rand(nn_hdim)
+    b2 = np.random.rand(len(X[0]))
     model = {'W1':W1, 'W2':W2, 'b1':b1, 'b2':b2}
 
     # Initialize weights with random values
-    for m in range(nn_hdim):
-        model['b1'][m] = random.uniform(-1,1)
-        for n in range(len(X[0])):
-            model['b2'][n] = random.uniform(-2,2)
-            model['W1'][n][m] = random.uniform(-2,2)
-            model['W2'][m][n] = random.uniform(-2,2)
 
     loss = calculate_loss(model,X,y)
 
