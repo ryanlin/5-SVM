@@ -7,6 +7,7 @@
 #
 
 import numpy as np
+from numpy import linalg
 import matplotlib.pyplot as plt
 
 def compute_Z(X, centering=True, scaling=False):
@@ -21,11 +22,7 @@ def compute_covariance_matrix(Z):
   return np.dot(Z.T, Z)   # (Z^T)(Z)
 
 def find_pcs(COV):
-  f = COV.shape[0]            # num features
-  eig_vals = np.array((1,f))  # eigen values
-  eig_vecs = np.array((f,f))  # eigen vectors
-
-  return 0
+  return linalg.eig(COV)
 
 def project_data(Z, PCS, L, k, var):
   return 0
