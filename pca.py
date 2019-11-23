@@ -57,10 +57,10 @@ def project_data(Z, PCS, L, k, var):
       Z_star : numpy array, projected data
   """
   if( k > 0):
-    # If using k, project data with k principal comps
+    # If k > 0, project data with k principal comps
     Z_star = np.dot(Z, PCS[:k].T)
   else:
-    # If not using k, include k PCs until var is reached
+    # If k = 0, include k PCs until var is reached
     cumulative_var = L[0]
     k = 1
     while(cumulative_var < var):
