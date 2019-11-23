@@ -25,5 +25,14 @@ def find_pcs(COV):
   return linalg.eig(COV)
 
 def project_data(Z, PCS, L, k, var):
-  return 0
-
+  if( k > 0):
+    Z_star = np.dot(Z, PCS[:k].T)
+  else:
+    cumulative_var = L[0]
+    k = 1
+    while(cumulative_var < var):
+      cumulative_var += L[i]
+      k += 1
+    Z_star = np.dot(Z, PCS[:k].T)
+  
+  return Z_star
