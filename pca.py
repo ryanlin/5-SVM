@@ -43,7 +43,10 @@ def find_pcs(COV):
       pcs : numpy array, eigenvectors (principal components)
   """
   # find eigenvalues (variance L) and eigenvectors (pcs)
-  return linalg.eig(COV)
+  L ,PCS = linalg.eigh(COV)
+  L = np.flip(L,0)
+  PCS = np.flip(PCS,1)
+  return L, PCS
 
 def project_data(Z, PCS, L, k, var):
   """ Projects data into space of k dimensions
@@ -58,14 +61,14 @@ def project_data(Z, PCS, L, k, var):
   """
   if( k > 0):
     # If k > 0, project data with k principal comps
-    Z_star = np.dot(Z, PCS[:k].T)
+    Z_star = np.matmul(Z, PCS[:,:k])
   else:
     # If k = 0, include k PCs until var is reached
     cumulative_var = L[0]
     k = 1
-    while(cumulative_var < var):
-      cumulative_var += L[i]
+    while ((cumulative_var < var) and (k < len(L))):
+      cumulative_var += L[k]
       k += 1
-    Z_star = np.dot(Z, PCS[:k].T)
+    Z_star = np.matmul(Z, PCS[:,:k])
   
   return Z_star
