@@ -26,15 +26,17 @@ def compress_images(DATA,k):
     try:
       os.mkdir(output_dir)
     except OSError:
-      print ("Creation of the directory %s failed" % output_dir)
-    else:
-      print ("Successfully created the directory %s " % output_dir)
+      return 0 
+	  #print ("Creation of the directory %s failed" % output_dir)
+    #else:
+      #print ("Successfully created the directory %s " % output_dir)
   # scale pixel value to range [0-255] and round off
   image_num = len(DATA_compress)
   for i in range(image_num):
     max_val = DATA_compress[i,:].max()
     min_val = DATA_compress[i,:].min()
-    DATA_compress[i,:] = (DATA_compress[i,:] - min_val) * 255 / (max_val - min_val)
+    if ((min_val < 0) or (max_val > 255)):
+      DATA_compress[i,:] = (DATA_compress[i,:] - min_val) * 255 / (max_val - min_val)
     DATA_compress[i,:] = np.rint(DATA_compress[i,:])   
     
     # display image
@@ -43,7 +45,7 @@ def compress_images(DATA,k):
     # plt.show()
 
     # save to output folder
-    file_name = os.path.join(output_dir, str(i) + "_k" + str(k))
+    file_name = os.path.join(output_dir, str(i) + "_k" + str(k) + ".png")
     plt.imsave(file_name, image_compress, cmap='gray', format='png')
   return 0
 
